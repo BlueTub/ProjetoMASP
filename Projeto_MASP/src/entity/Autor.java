@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Autor {
 
-	private String codigoAutor;
+	private long codigoAutor;
 	private String nomeAutor;
 	private Date  nascimento;
 	private String nacionalidade;
@@ -12,12 +12,14 @@ public class Autor {
 	private String movimento;
 	private int periodAtividade;
 	private String areaAtividade;
+	private String descricao;
 	
 	
-	public String getCodigoAutor() {
+	
+	public long getCodigoAutor() {
 		return codigoAutor;
 	}
-	public void setCodigoAutor(String codigoAutor) {
+	public void setCodigoAutor(long codigoAutor) {
 		this.codigoAutor = codigoAutor;
 	}
 	public String getNomeAutor() {
