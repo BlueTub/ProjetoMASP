@@ -2,6 +2,39 @@ CREATE DATABASE masp;
 use masp;
 
 
+--tipo de pessoa
+CREATE TABLE tipo(
+id int identity not null,
+descricao varchar(50) not null
+primary key(id)) 
+
+--EXECUTAR ANTES DE RODAR O PROJETO
+INSERT INTO tipo (descricao) VALUES 
+('Visitante'),      --1
+('Autor'),          --2
+('Editor'),         --3
+('Representante');  --4
+
+--Impossibilita a edição do tipo
+CREATE TRIGGER t_tipo
+ON tipo
+instead of INSERT, UPDATE, DELETE 
+AS
+begin
+	raiserror('Não é possível realizar essa operação',16,1)
+END;
+
+--enable 
+enable trigger t_tipo on tipo;
+
+--pessoa para as demais
+create table pessoa(
+idPessoa int identity not null,
+idTipo int not null
+primary key(idPessoa),
+foreign key(idTipo) references tipo(id))
+
+
 --Dados da empresa
 CREATE TABLE empresa(
 
@@ -56,10 +89,18 @@ primary key (autor, titulo)
 foreign key ( autor ) references autor(codAutor)
 );
 
-CREATE TABLE pessoa(
+--Dados da pessoa @@@@@@@@@@@22editar
+CREATE TABLE visitante(
+
 nome varchar(100) not null,
 dataNasc datetime,
-nivelAcad varchar(50) not null
+nivelAcad varchar(50) not null,
+genero varchar(15) not null check( genero = 'masculino' or
+  genero = 'feminino' or genero = 'outro'),
+naturalidade varchar (50),
+nacionalidade 
 )
+
+
 
 
