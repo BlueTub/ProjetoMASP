@@ -1,6 +1,8 @@
 CREATE DATABASE masp;
 use masp;
 
+
+--Dados da empresa
 CREATE TABLE empresa(
 
 nome varchar(100),
@@ -15,6 +17,32 @@ estado varchar(30) not null,
 cep int,
 pais varchar(100)
 primary key(cnpj)
-)
+);
 
-CREATE TABLE representante()
+--Dados dos representantes da empresa
+CREATE TABLE representante(
+
+cnpj varchar(12),
+nome varchar(100),
+cpf varchar(11),
+rg varchar(9),
+tel varchar(11),
+primary key (rg)
+foreign key ( cnpj ) references empresa(cnpj)
+);
+
+--Dados de uma obra
+CREATE TABLE obra(
+
+autor varchar(100) not null,
+titulo varchar(100) not null,
+subtitulo varchar(100),
+edicao varchar(10),
+editor varchar(100),
+ano varchar(4) not null , 
+isbn varchar(13),
+primary key (autor, titulo)
+);
+
+
+
