@@ -27,7 +27,7 @@ public class ConnectionImpl implements GenericConnection {
 		try {
 			Class.forName("net.sourceforge.jtds.jdbc.Driver");
 			con = DriverManager.getConnection(
-					"jdbc:jtds:sqlserver://localhost:1433;" + "DatabaseName=paulista;namedPipe=true", "sa", "senha");
+					"jdbc:mysql://127.0.0.1:3306/?user=root" + "DatabaseName=masp;namedPipe=true", "root", "root");
 		} catch (ClassNotFoundException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
 		} catch (SQLException e) {
