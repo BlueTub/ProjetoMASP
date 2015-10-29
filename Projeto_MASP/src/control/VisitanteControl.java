@@ -12,9 +12,11 @@ public class VisitanteControl {
 	
 	Visitante v = new Visitante();
 
-	public void insereVisitante() {
+	public void insereVisitante(Visitante v) {
+		System.out.println("Entrou no control insereVisitante");
 		IVisitante iv = new VisitanteImpl();
 		try {
+			System.out.println(v.getDtNasc());
 			iv.insereVisitante(v);
 			JOptionPane.showMessageDialog(null, 
 					"Cadastrado com Sucesso","Sucesso",
@@ -22,8 +24,8 @@ public class VisitanteControl {
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(),
 					"ERRO", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
 		}
+		
 	}
 	
 	public void consultaVisitantePeloNome(String nome) {

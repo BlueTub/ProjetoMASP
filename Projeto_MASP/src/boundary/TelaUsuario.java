@@ -256,38 +256,72 @@ public class TelaUsuario implements ActionListener{
 				v.setSexo("f");
 			}
 		}
+		
 		if ("Salvar".equals(cmd)) {
-			validaCampo();
-			preencheTela();
-			VisitanteControl vc = new VisitanteControl();
-			vc.insereVisitante();
+			if (!"".equals(txtNome.getText()) && !"".equals(txtDataNasc.getText()) && !"".equals(txtNacionalidade.getText())
+					&& !"".equals(txtNaturalidade.getText())) {
+				if (!"".equals(txtRg.getText()) || !"".equals(txtCpf.getText()) || !"".equals(txtPassaporte.getText()) ) {
+					System.out.println("Passou da validação");
+					v = preencheObjeto();
+					System.out.println("Chama o control  insereVisitante()");
+					VisitanteControl vc = new VisitanteControl();
+					vc.insereVisitante(v);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+			}
 		}
+		
 		if ("".equals(cmd)) {
 			VisitanteControl vc = new VisitanteControl();
 			vc.consultaVisitantePeloNome(txtNome.getText());
 			preencheTela();
 		}
+		
 		if ("Voltar".equals(cmd)) {
 			frmRegistraVisitante.dispose();
 		}
 	}
 	
-	private void validaCampo() {
-		if ("".equals(txtNome.getText()) && "  /  /    ".equals(txtDataNasc.getText()) && "".equals(txtNacionalidade.getText())
-				&& "".equals(txtNaturalidade.getText())) {
-			txtDataNasc.setText(txtDataNasc.getText());
-			JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-		}
-	}
-
-	public void preencheObjeto(){
+	public Visitante preencheObjeto(){
+		System.out.println("Entrou no preencheObjeto()");
 		Visitante v = new Visitante();
 		v.setNome(txtNome.getText());
-		v.setDtNasc(txtDataNasc.getText().replaceAll("/", ""));
+		v.setDtNasc(txtDataNasc.getText());
+		System.out.println(v.getDtNasc());
 		v.setNaturalidade(txtNaturalidade.getText());
 		v.setNacionalidade(txtNacionalidade.getText());
-		System.out.println(v.getNome());
-		System.out.println(v.getDtNasc());
+		if (rdbtnMasculino.isSelected()) {
+			v.setSexo("m");
+		}else{
+			if (rdbtnFeminino.isSelected()) {
+				v.setSexo("f");
+			}
+		}
+		if (rdbtnRg.isSelected()) {
+			v.setRg(txtRg.getText().replaceAll("[.-]", ""));
+		}else {
+			if (rdbtnCpf.isSelected()) {
+				v.setCpf(txtCpf.getText().replaceAll("[.-]", ""));
+			}else {
+				if (rdbtnPassaporte.isSelected()) {
+					v.setPassaporte(txtPassaporte.getText());
+				}
+			}
+		}
+		
+		return v;
+		
+//		System.out.println(v.getNome());
+//		System.out.println(v.getDtNasc());
+//		System.out.println(v.getDtNasc());
+//		System.out.println(v.getSexo());
+//		System.out.println(v.getNacionalidade());
+//		System.out.println(v.getNaturalidade());
+//		System.out.println(v.getNivelAcademico());
+//		System.out.println(v.getRg());
+//		System.out.println(v.getCpf());
+//		System.out.println(v.getPassaporte());
 	}
 	
 	public void preencheTela(){
@@ -310,6 +344,7 @@ public class TelaUsuario implements ActionListener{
 				rdbtnPassaporte.setSelected(true);
 			}
 		}
+		
 	}
 
 }

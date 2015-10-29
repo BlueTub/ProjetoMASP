@@ -20,6 +20,7 @@ public class VisitanteImpl implements IVisitante{
 
 	@Override
 	public void insereVisitante(Visitante v) throws SQLException {
+		System.out.println("entrou no Impl insereVisitante()");
 		String sql = "INSERT INTO visitante VALUES (?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, v.getNome());
