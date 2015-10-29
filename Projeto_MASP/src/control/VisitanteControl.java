@@ -4,9 +4,9 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import connection.IVisitante;
-import connection.VisitanteImpl;
 import entity.Visitante;
+import persistence.IVisitante;
+import persistence.VisitanteImpl;
 
 public class VisitanteControl {
 	
