@@ -38,7 +38,7 @@ public class VisitanteImpl implements IVisitante{
 
 	@Override
 	public Visitante consultaVisitante(String nome) throws SQLException {
-		String sql = "select CONVERT(char(10),dtNasc , 103), "
+		String sql = "select CONVERT(char(10),dtNasc , 103) as dtNasc, "
 				+ "sexo, nacionalidade, naturalidade, nivelAcademico, "
 				+ "rg, cpf, passaporte "
 				+ "from visitante "

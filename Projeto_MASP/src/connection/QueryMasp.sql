@@ -89,18 +89,28 @@ primary key (autor, titulo)
 foreign key ( autor ) references autor(codAutor)
 );
 
---Dados da pessoa @@@@@@@@@@@22editar
-CREATE TABLE visitante(
+create table visitante (
+cod int identity not null,
+nome varchar(200) not null,
+dtNasc varchar(15) not null,
+sexo char(1) not null,
+nacionalidade varchar(100) not null,
+naturalidade varchar(100) not null,
+nivelAcademico varchar(100) not null,
+rg varchar(50),
+cpf varchar (11),
+passaporte varchar(8)
+primary key (cod)
+) 
 
-nome varchar(100) not null,
-dataNasc datetime,
-nivelAcad varchar(50) not null,
-genero varchar(15) not null check( genero = 'masculino' or
-  genero = 'feminino' or genero = 'outro'),
-naturalidade varchar (50),
-nacionalidade 
-)
+insert into visitante values ('Ericka', '21/04/1994', 'f', 'Brasil', 'brasileira', 'superior incompleto', '391719063', '', '')
 
+create table usuario(
+cod int identity not null,
+login varchar(10) not null,
+senha varchar(10) not null
+primary key (cod))
 
+insert into usuario values ('admin', 'admin')
 
 
