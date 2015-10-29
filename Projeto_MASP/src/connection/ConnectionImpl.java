@@ -25,7 +25,7 @@ public class ConnectionImpl implements GenericConnection {
 	@Override
 	public Connection getConnection() {
 		try {
-			Class.forName("net.sourceforge.jtds.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1:3306/?user=root" + "DatabaseName=masp;namedPipe=true", "root", "root");
 		} catch (ClassNotFoundException e) {
