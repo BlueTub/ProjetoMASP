@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
@@ -21,7 +22,6 @@ public class FrmAutor extends JFrame {
 	private JTextField txtNome;
 	private JTextField txtDataNasc;
 	private JTextField txtNacionalidade;
-	private JTextField txtAddMovimento;
 	private JTextField txtAreaAtividade;
 	private JTextField txtPeriodo;
 	private JTextField txtMorte;
@@ -46,7 +46,7 @@ public class FrmAutor extends JFrame {
 	 * Create the frame.
 	 */
 	public FrmAutor() {
-		setTitle("\t\t\t\t\t\t\t\t\tCadastrar Autor");
+		setTitle("Cadastrar Autor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 698, 452);
 		contentPane = new JPanel();
@@ -85,22 +85,9 @@ public class FrmAutor extends JFrame {
 		lblMovimento.setBounds(49, 210, 71, 14);
 		contentPane.add(lblMovimento);
 		
-		JComboBox cbMovimento = new JComboBox();
-		cbMovimento.setBounds(130, 207, 143, 20);
+		JComboBox<String> cbMovimento = new JComboBox<String>();
+		cbMovimento.setBounds(130, 207, 179, 20);
 		contentPane.add(cbMovimento);
-		
-		txtAddMovimento = new JTextField();
-		txtAddMovimento.setBounds(323, 207, 118, 20);
-		contentPane.add(txtAddMovimento);
-		txtAddMovimento.setColumns(10);
-		
-		JButton btnAdd = new JButton("Add");
-		btnAdd.setBounds(451, 206, 70, 23);
-		contentPane.add(btnAdd);
-		
-		JLabel lblOu = new JLabel("ou");
-		lblOu.setBounds(290, 210, 46, 14);
-		contentPane.add(lblOu);
 		
 		JLabel lblAreaAtividades = new JLabel("Area (atividade) :");
 		lblAreaAtividades.setBounds(23, 247, 97, 14);
@@ -133,11 +120,13 @@ public class FrmAutor extends JFrame {
 		contentPane.add(rdbtnFalecido);
 		
 		txtMorte = new JTextField();
+		txtMorte.setEnabled(false);
 		txtMorte.setBounds(474, 94, 86, 20);
 		contentPane.add(txtMorte);
 		txtMorte.setColumns(10);
 		
 		JLabel lblDataDaMorte = new JLabel("Data da morte :");
+		lblDataDaMorte.setEnabled(false);
 		lblDataDaMorte.setBounds(388, 96, 76, 17);
 		contentPane.add(lblDataDaMorte);
 		
@@ -152,5 +141,55 @@ public class FrmAutor extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(10, 371, 71, 32);
 		contentPane.add(btnVoltar);
+		
+		
+		
+		/**
+		 * ArrayList com o preenchimento do campo movimento.
+		 */
+		ArrayList<String> movimento = new ArrayList<String>();
+		movimento.add("Selecione o Movimento");
+		movimento.add("Art Déco");
+		movimento.add("Arte Naif");
+		movimento.add("Arte Povera");
+		movimento.add("Barroco");
+		movimento.add("Costumbismo");
+		movimento.add("Dadaísmo");
+		movimento.add("Dieselpunk");
+		movimento.add("Expressionismo");
+		movimento.add("Fauvismo");
+		movimento.add("Futurismo");
+		movimento.add("Humanismo");
+		movimento.add("Imagismo");
+		movimento.add("Impressionismo");
+		movimento.add("Movimento Armorial");
+		movimento.add("Neoconcretismo");
+		movimento.add("Neoplasticismo");
+		movimento.add("Nova Objetividade");
+		movimento.add("Orfismo");
+		movimento.add("Pop-Art");
+		movimento.add("Pós-Modernismo");
+		movimento.add("Primitivismo");
+		movimento.add("Purismo");
+		movimento.add("Raionismo");
+		movimento.add("Realismo");
+		movimento.add("Renascimento");
+		movimento.add("Romantismo");
+		movimento.add("Simbolismo");
+		movimento.add("Suprematismo");
+		movimento.add("Surrealismo");
+		movimento.add("Tenebrismo");
+		movimento.add("Tropicália");
+		movimento.add("Universo Gótico");
+		movimento.add("Vorticismo");
+		
+		for (String m : movimento)
+			cbMovimento.addItem(m);
+		
+		
+		
+		
+		
 	}
+	
 }
