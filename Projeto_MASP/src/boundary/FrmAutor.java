@@ -1,20 +1,24 @@
 package boundary;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
+
+import entity.Autor;
 
 public class FrmAutor extends JFrame {
 
@@ -23,9 +27,15 @@ public class FrmAutor extends JFrame {
 	private JTextField txtDataNasc;
 	private JTextField txtNacionalidade;
 	private JTextField txtAreaAtividade;
-	private JTextField txtPeriodo;
 	private JTextField txtMorte;
+	private JComboBox<String> cbMovimento; 
+	private JTextPane txtpaneDescricao; 
+	private JRadioButton rdbtnFalecido;
+	private JLabel lblDataDaMorte;
 
+	java.util.Date dataNasc=new java.util.Date();
+	java.util.Date dataMort=new java.util.Date();
+	SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
 	/**
 	 * Launch the application.
 	 */
@@ -85,7 +95,7 @@ public class FrmAutor extends JFrame {
 		lblMovimento.setBounds(49, 210, 71, 14);
 		contentPane.add(lblMovimento);
 		
-		JComboBox<String> cbMovimento = new JComboBox<String>();
+	    cbMovimento = new JComboBox<String>();
 		cbMovimento.setBounds(130, 207, 179, 20);
 		contentPane.add(cbMovimento);
 		
@@ -94,41 +104,39 @@ public class FrmAutor extends JFrame {
 		contentPane.add(lblAreaAtividades);
 		
 		txtAreaAtividade = new JTextField();
-		txtAreaAtividade.setBounds(124, 244, 149, 20);
+		txtAreaAtividade.setBounds(130, 244, 179, 20);
 		contentPane.add(txtAreaAtividade);
 		txtAreaAtividade.setColumns(10);
 		
-		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o :");
-		lblDescrio.setBounds(49, 288, 71, 14);
-		contentPane.add(lblDescrio);
+		JLabel lblDescricao = new JLabel("Descri\u00E7\u00E3o :");
+		lblDescricao.setBounds(49, 288, 71, 14);
+		contentPane.add(lblDescricao);
 		
-		JTextPane txtpaneDescricao = new JTextPane();
+		txtpaneDescricao = new JTextPane();
 		txtpaneDescricao.setBounds(130, 288, 391, 49);
 		contentPane.add(txtpaneDescricao);
 		
-		JLabel lblPeriodo = new JLabel("Periodo de Atividade :");
-		lblPeriodo.setBounds(323, 247, 118, 14);
-		contentPane.add(lblPeriodo);
+		lblDataDaMorte = new JLabel("Data da morte :");
+		lblDataDaMorte.setEnabled(false);
+		lblDataDaMorte.setBounds(388, 96, 76, 17);
+		contentPane.add(lblDataDaMorte);
 		
-		txtPeriodo = new JTextField();
-		txtPeriodo.setBounds(435, 244, 86, 20);
-		contentPane.add(txtPeriodo);
-		txtPeriodo.setColumns(10);
-		
-		JRadioButton rdbtnFalecido = new JRadioButton("Falecido");
+		rdbtnFalecido = new JRadioButton("Falecido");
 		rdbtnFalecido.setBounds(300, 93, 82, 23);
 		contentPane.add(rdbtnFalecido);
 		
+	
+		
 		txtMorte = new JTextField();
-		txtMorte.setEnabled(false);
+		txtMorte.setEnabled(true);
 		txtMorte.setBounds(474, 94, 86, 20);
 		contentPane.add(txtMorte);
 		txtMorte.setColumns(10);
 		
-		JLabel lblDataDaMorte = new JLabel("Data da morte :");
-		lblDataDaMorte.setEnabled(false);
-		lblDataDaMorte.setBounds(388, 96, 76, 17);
-		contentPane.add(lblDataDaMorte);
+		//
+		txtMorte.setVisible(false);
+		lblDataDaMorte.setVisible(false);
+		
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -185,11 +193,73 @@ public class FrmAutor extends JFrame {
 		
 		for (String m : movimento)
 			cbMovimento.addItem(m);
+
+	}
+	
+	public Date dataNasc(){
+		
+		try{
+			dataNasc= sdf.parse(txtDataNasc.getText());
+		}catch(ParseException e){
+			System.out.println("data Incorreta");
+		}	
+		return new Date(dataNasc.getTime());
+	}
+	
+	public Date dataMort(){
+		try {
+			dataMort=sdf.parse(txtMorte.getText());
+		} catch (ParseException e) {
+			System.out.println("data Incorreta");
+		}
+		return new  Date (dataMort.getTime());
+	}
+	
+	
+	public void acionaFalecimento(){
+		if(rdbtnFalecido.isSelected()){
+			
+			txtMorte.setVisible(true);
+			lblDataDaMorte.setVisible(true);
+		}else{
+			txtMorte.setVisible(false);
+			lblDataDaMorte.setVisible(false);
+		}
+	}
+	
+	public Autor autorFrame(){
+		Autor autor=new Autor();
 		
 		
+		String nome="";
+		Date  dataNasc;
+		Date dataMort;
+		String nacionalidade="";
+		String movimento="";
+		String areaAtiv="";
+		String descricao="";
 		
+		nome= txtNome.getText();
+		dataNasc=dataNasc();
+		dataMort=dataMort();
+		nacionalidade=txtNacionalidade.getText();
+		movimento=(String) cbMovimento.getSelectedItem();
+		areaAtiv=txtAreaAtividade.getText();
+		descricao=txtpaneDescricao.getText();
 		
+		autor.setNomeAutor(nome);
+		autor.setNascimento(dataNasc);
+		autor.setDataMorte(dataMort);
+		autor.setNacionalidade(nacionalidade);
+		autor.setMovimento(movimento);
+		autor.setAreaAtividade(areaAtiv);
+		autor.setDescricao(descricao);
+		
+		return autor;
 		
 	}
+	
+	
+	
 	
 }

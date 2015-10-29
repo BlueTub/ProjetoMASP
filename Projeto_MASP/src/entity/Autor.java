@@ -64,5 +64,11 @@ public class Autor {
 	public void setAreaAtividade(String areaAtividade) {
 		this.areaAtividade = areaAtividade;
 	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 	
 }
