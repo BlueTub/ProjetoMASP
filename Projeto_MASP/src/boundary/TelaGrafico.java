@@ -1,6 +1,7 @@
 package boundary;
 
 import java.awt.EventQueue;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,12 +14,14 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
-import javafx.scene.input.MouseEvent;
+import util.Tupla;
 import javafx.scene.Group;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.awt.event.ItemEvent;
 
 public class TelaGrafico implements ActionListener {
 
@@ -46,25 +49,26 @@ public class TelaGrafico implements ActionListener {
 		initialize();
 	}
 
-	private static void initFxLater(JFXPanel panel){
+	private static void initFxLater(JFXPanel panel, List<Tupla<String, Integer>> lista, String titulo){
 		Group root = new Group();
-        Scene scene = new Scene(root, 400, 400);
+        Scene scene = new Scene(root, frmW+100, frmH-100);
 
-		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-				new PieChart.Data("-12", 13),
-				new PieChart.Data("13-19", 25),
-				new PieChart.Data("20-30", 10),
-				new PieChart.Data("30-60", 22),
-				new PieChart.Data("+60", 30));
+		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+				for(int i=0;i<lista.size();i++){
+					pieChartData.add(new PieChart.Data(lista.get(i).x, lista.get(i).y));
+				}
 		PieChart chart = new PieChart(pieChartData);
-		chart.setTitle("Idade");
-
+		chart.setTitle(titulo);
+		chart.setLabelLineLength(10);
+		//chart.setLegendVisible(false);
+		//chart.setLegendSide(Side.RIGHT);
+		
 		((Group) scene.getRoot()).getChildren().add(chart);
 		 
         panel.setScene(scene);
     }
 	
-	@SuppressWarnings({ "rawtypes", "deprecation" })
+	@SuppressWarnings({ "deprecation" })
 	private void initialize() {
 		frmGrafico = new JFrame(); frmGrafico.setTitle("Grafico dos Visitantes");
 		frmGrafico.setBounds(frmX, frmY, frmW, frmH);
@@ -79,24 +83,69 @@ public class TelaGrafico implements ActionListener {
 		
 		JLabel lblFiltro = new JLabel("Filtrar por :");
 		lblFiltro.setBounds(10, 14, 54, 14);
-		frmGrafico.getContentPane().add(lblFiltro);
+		//frmGrafico.getContentPane().add(lblFiltro);
  		
-		JComboBox cmbFiltro = new JComboBox();
-		cmbFiltro.setModel(new DefaultComboBoxModel(new String[] {"Idade", "Sexo", "Nacionalidade", "Nível acadêmico", "Meio de locomoção"}));
-		cmbFiltro.setBounds(74, 11, 132, 20);
-		frmGrafico.getContentPane().add(cmbFiltro);
-		
 		final JFXPanel jFXPanel = new JFXPanel();
-		jFXPanel.setBounds(10, 40, 500, 500);
-        frmGrafico.add(jFXPanel);
+		jFXPanel.setBounds(10, 40, 628, 343);
+        frmGrafico.getContentPane().add(jFXPanel);
         
-        Platform.runLater(new Runnable(){
-        	 
-            @Override
-            public void run() {
-                initFxLater(jFXPanel);
-            }
-        });
+		JComboBox<String> cmbFiltro = new JComboBox<String>();
+		cmbFiltro.setBounds(10, 11, 196, 20);
+		cmbFiltro.setModel(new DefaultComboBoxModel<String>(new String[] {"Escolha o filtro por...", "Idade", "Sexo", "Nacionalidade", "Nível acadêmico", "Meio de locomoção"}));
+		cmbFiltro.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				List<Tupla<String, Integer>> lista = new ArrayList<Tupla<String, Integer>>();
+				lista.removeAll(lista);
+				//proc banco
+				switch(cmbFiltro.getSelectedItem().toString()){
+					case "Idade":
+						lista.add(new Tupla<String, Integer>("0-12",15));
+						lista.add(new Tupla<String, Integer>("13-19",32));
+						lista.add(new Tupla<String, Integer>("20-30",11));
+						lista.add(new Tupla<String, Integer>("31-60",23));
+						lista.add(new Tupla<String, Integer>("+61",19));
+						break;
+
+					case "Sexo":
+						lista.add(new Tupla<String, Integer>("Masculino",35));
+						lista.add(new Tupla<String, Integer>("Feminino",54));
+						lista.add(new Tupla<String, Integer>("Outros",11));
+						break;
+						
+					case "Nacionalidade":
+						lista.add(new Tupla<String, Integer>("Brasil",23));
+						lista.add(new Tupla<String, Integer>("Estados Unidos",19));
+						lista.add(new Tupla<String, Integer>("França",32));
+						lista.add(new Tupla<String, Integer>("Argentina",15));
+						lista.add(new Tupla<String, Integer>("Outros",11));
+						break;
+						
+					case "Nível acadêmico":
+						lista.add(new Tupla<String, Integer>("Fundamental",25));
+						lista.add(new Tupla<String, Integer>("Medio",35));
+						lista.add(new Tupla<String, Integer>("Superior",30));
+						lista.add(new Tupla<String, Integer>("Outros",10));
+						break;
+						
+					case "Meio de locomoção":
+						lista.add(new Tupla<String, Integer>("A pé",11));
+						lista.add(new Tupla<String, Integer>("Ônibus",23));
+						lista.add(new Tupla<String, Integer>("Trem/Metrô",32));
+						lista.add(new Tupla<String, Integer>("Veículo Própio",19));
+						lista.add(new Tupla<String, Integer>("Outros",15));
+						break;
+				}
+				
+				Platform.runLater(new Runnable(){
+		        	 
+		            @Override
+		            public void run() {
+		                initFxLater(jFXPanel, lista, cmbFiltro.getSelectedItem().toString());
+		            }
+		        });
+			}
+		});
+		frmGrafico.getContentPane().add(cmbFiltro);
 }
 
 	@Override
