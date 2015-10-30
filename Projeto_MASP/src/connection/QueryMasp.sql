@@ -2,55 +2,25 @@ CREATE DATABASE masp;
 use masp;
 
 
---tipo de pessoa
-CREATE TABLE tipo(
-id int identity not null,
-descricao varchar(50) not null
-primary key(id)) 
-
---EXECUTAR ANTES DE RODAR O PROJETO
-INSERT INTO tipo (descricao) VALUES 
-('Visitante'),      --1
-('Autor'),          --2
-('Editor'),         --3
-('Representante');  --4
-
---Impossibilita a edição do tipo
-CREATE TRIGGER t_tipo
-ON tipo
-instead of INSERT, UPDATE, DELETE 
-AS
-begin
-	raiserror('Não é possível realizar essa operação',16,1)
-END;
-
---enable 
-enable trigger t_tipo on tipo;
-
---pessoa para as demais
-create table pessoa(
-idPessoa int identity not null,
-idTipo int not null
-primary key(idPessoa),
-foreign key(idTipo) references tipo(id))
 
 
---Dados da empresa
+
 CREATE TABLE empresa(
 
-nome varchar(100),
-cnpj varchar(12) not null check not(cnpj = '111111111111' or cnpj = '222222222222' or cnpj = '333333333333' or
-  cnpj = '444444444444' or cnpj = '555555555555' or cnpj = '666666666666' or cnpj = '777777777777' or
-  cnpj = '888888888888' or cnpj = '999999999999' or cnpj = '000000000000')
+cnpj varchar(12) not null,
+nome varchar(100) not null,
 logradouro varchar(80) not null,
 numero int not null,
-complemento varchar(50),
+complemento varchar(50) not null,
 municipio varchar(100) not null,
 estado varchar(30) not null,
-cep int,
-pais varchar(100)
-primary key(cnpj)
+cep int DEFAULT NULL,
+pais varchar(100) not null
 );
+
+-- check not(cnpj = '111111111111' or cnpj = '222222222222' or cnpj = '333333333333' or
+ -- cnpj = '444444444444' or cnpj = '555555555555' or cnpj = '666666666666' or cnpj = '777777777777' or
+ -- cnpj = '888888888888' or cnpj = '999999999999' or cnpj = '000000000000'),
 
 --Dados dos representantes da empresa
 CREATE TABLE representante(
@@ -64,53 +34,57 @@ primary key (rg)
 foreign key ( cnpj ) references empresa(cnpj)
 );
 
---Dados do autor
+-- Dados do autor
 CREATE TABLE autor(
 
-codAutor int,
+codAutor int not null,
 nome varchar(100) not null,
 dataNasc datetime,
 nacionalidade varchar(50),
-primary key (codAutor)
+obito datetime,
+-- movimento varchar(40),
+descricao varchar(100)
 )
 
+update autor set nome = ?, dataNasc = ?, nacionalidade = ?, obito = ?, descricao = ? where codAutor = ?
 
 --Dados de uma obra
 CREATE TABLE obra(
 
+id int,
 autor int not null,
 titulo varchar(100) not null,
+categoria varchar(20),
+tipo varchar(50),
+tecnica varchar(50),
+daaObra datetime,
+altura decimal (3,2),
+largura decimal (3,2),
+profundidade int,
+dadosBiograficos varchar(MAX),
 subtitulo varchar(100),
 edicao varchar(10),
 editor varchar(100),
 ano varchar(4) not null , 
 isbn varchar(13),
-primary key (autor, titulo)
-foreign key ( autor ) references autor(codAutor)
+
 );
 
-create table visitante (
-cod int identity not null,
-nome varchar(200) not null,
-dtNasc varchar(15) not null,
-sexo char(1) not null,
-nacionalidade varchar(100) not null,
-naturalidade varchar(100) not null,
-nivelAcademico varchar(100) not null,
-rg varchar(50),
+--Dados da pessoa 
+CREATE TABLE visitante(
+
+nome varchar(100) not null,
+dataNasc datetime,
+nivelAcad varchar(50) not null,
+sexo varchar(15) not null check( sexo = 'masculino' or
+  sexo = 'feminino' or sexo = 'outro'),
+naturalidade varchar (50) not null,
+nacionalidade varchar (50) not null,
+rg varchar (9),
 cpf varchar (11),
-passaporte varchar(8)
-primary key (cod)
-) 
+passaporte varchar(15)
+)
 
-insert into visitante values ('Ericka', '21/04/1994', 'f', 'Brasil', 'brasileira', 'superior incompleto', '391719063', '', '')
 
-create table usuario(
-cod int identity not null,
-login varchar(10) not null,
-senha varchar(10) not null
-primary key (cod))
-
-insert into usuario values ('admin', 'admin')
 
 
