@@ -27,13 +27,14 @@ public class AutorDaoImpl implements AutorDao {
 
 	@Override
 	public void insereAutor(Autor a) throws SQLException {
-		String query = "INSERT INTO autor ?,?,?,?,?,? where codAutor = ?";
+		String query = "INSERT INTO autor (?,?,?,?)";
 		
 		try {
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setString(1, a.getNomeAutor());
-			
-;
+			ps.setString(2,a.getNacionalidade());
+			ps.setString(3, a.getDescricao());
+			ps.setString(4, a.getAreaAtividade());
 			ps.execute();
 			ps.close();
 		} catch (SQLException e) {
@@ -44,7 +45,7 @@ public class AutorDaoImpl implements AutorDao {
 
 	@Override
 	public void atualizaAutor(Autor a) throws SQLException {
-		String query = "update autor set nome = ?, dataNasc = ?, nacionalidade = ?, obito = ?, descricao = ? where codAutor = ?";
+		String query = "update autor set nome = ?, nacionalidade = ?,descricao = ? where codAutor = ?";
 		try {
 			PreparedStatement ps = c.prepareStatement(query);
 			ps.setString(1, a.getNomeAutor());
