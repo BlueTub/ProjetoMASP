@@ -1,6 +1,7 @@
 package boundary;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,13 +16,16 @@ import javax.swing.text.MaskFormatter;
 
 import boundary.custom.JButtonCustom;
 import boundary.custom.JComboBoxCustom;
+import boundary.custom.JFrameCustom;
 import boundary.custom.JLabelCustom;
 import boundary.custom.JPanelCustom;
 import boundary.custom.JTextFieldCustom;
 import control.ObraControl;
 import entity.Obra;
 
-public class ObraBoundary extends JPanelCustom{
+
+public class FrmSalvarObra extends JFrameCustom{
+
 
 	private JTextFieldCustom txtId;
 	private JButtonCustom btnPesquisarObra;
@@ -45,69 +49,76 @@ public class ObraBoundary extends JPanelCustom{
 	private JButtonCustom btnAlterar;
 
 	private ObraControl obraControl;
+
+	private JPanelCustom painel;
 	
-	@SuppressWarnings("unchecked")
-	public ObraBoundary(){
+	public FrmSalvarObra(){
+
 		obraControl = new ObraControl();
+
+		painel = new JPanelCustom();
+		
+		setContentPane(painel);
+		super.setTitle("Obras");
 		
 		JLabelCustom lblId = new JLabelCustom("Número de identificação:");
-		this.add(lblId);
+		//painel.add(lblId);
 		lblId.setBounds(40, 20, 245, 35);
 
 		txtId = new JTextFieldCustom( );
-		this.add(txtId);
+		//painel.add(txtId);
 		txtId.setBounds(295, 20, 140, 35);
 
 		btnPesquisarObra = new JButtonCustom("Pesquisar");
-		this.add(btnPesquisarObra);
+		//painel.add(btnPesquisarObra);
 		btnPesquisarObra.setBounds(445, 20, 140, 35);
 
 		JLabelCustom lblTitulo = new JLabelCustom("Título:");
-		this.add(lblTitulo);
+		painel.add(lblTitulo);
 		lblTitulo.setBounds(40, 80, 100, 35);
 
 		txtTitulo = new JTextFieldCustom();
-		this.add(txtTitulo);
+		painel.add(txtTitulo);
 		txtTitulo.setBounds(140, 80, 295, 35);
 
 		JLabelCustom lblCategoria = new JLabelCustom("Categoria:");
-		this.add(lblCategoria);
+		painel.add(lblCategoria);
 		lblCategoria.setBounds(40, 140, 100, 35);
 
 		cmbCategoria = new JComboBoxCustom();
-		this.add(cmbCategoria);
+		painel.add(cmbCategoria);
 		cmbCategoria.setBounds(150, 140, 220, 35);
 
 		JLabelCustom lblTipo = new JLabelCustom("Tipo obra:");
-		this.add(lblTipo);
+		painel.add(lblTipo);
 		lblTipo.setBounds(500, 140, 150, 35);
 
 		cmbTipo = new JComboBoxCustom();
-		this.add(cmbTipo);
+		painel.add(cmbTipo);
 		cmbTipo.setBounds(620, 140, 220, 35);
 
 		JLabelCustom lblTecnica = new JLabelCustom("Técnica:");
-		this.add(lblTecnica);
+		painel.add(lblTecnica);
 		lblTecnica.setBounds(40, 200, 100, 35);
 
 		cmbTecnica = new JComboBoxCustom();
-		this.add(cmbTecnica);
+		painel.add(cmbTecnica);
 		cmbTecnica.setBounds(150, 200, 190, 35);
 
 		try {
 			JLabelCustom lblDataObra = new JLabelCustom("Data da obra:");
-			this.add(lblDataObra);
+			painel.add(lblDataObra);
 			lblDataObra.setBounds(500, 200, 140, 35);
 
 			txtData = new JFormattedTextField(new MaskFormatter("##/##/####"));
-			this.add(txtData);
+			painel.add(txtData);
 			txtData.setBounds(650, 200, 140, 35);
 			txtData.setFont(new Font("Arial", 0, 19));
 			txtData.setBorder(new LineBorder(new Color(0, 0, 0)));
 		} catch (ParseException e) {}
 
 		painelDimensoes = new JPanelCustom();
-		this.add(painelDimensoes);
+		painel.add(painelDimensoes);
 		painelDimensoes.setBounds(30, 260, 860, 80);
 		painelDimensoes.setBackground(new Color(240, 240, 240));
 
@@ -142,52 +153,52 @@ public class ObraBoundary extends JPanelCustom{
 		txtProfundidade.setBounds(710, 10, 50, 35);
 
 		JLabelCustom lblDados = new JLabelCustom("Dados biográficos:");
-		this.add(lblDados);
+		painel.add(lblDados);
 		lblDados.setBounds(40, 350, 230, 35);
 
 		txtDados = new JTextFieldCustom();
-		this.add(txtDados);
+		painel.add(txtDados);
 		txtDados.setBounds(240, 350, 500, 35);
 
 		JLabelCustom lblAutor = new JLabelCustom("Autor:");
-		this.add(lblAutor);
+		painel.add(lblAutor);
 		lblAutor.setBounds(40, 410, 100, 35);
 
 		txtAutor = new JTextFieldCustom();
-		this.add(txtAutor);
+		painel.add(txtAutor);
 		txtAutor.setBounds(110, 410, 200, 35);
 
 		btnPesquisarAutor = new JButtonCustom("Pesquisar");
-		this.add(btnPesquisarAutor);
+		painel.add(btnPesquisarAutor);
 		btnPesquisarAutor.setBounds(320, 410, 130, 35);
 
 		JLabelCustom lblValor = new JLabelCustom("Valor:");
-		this.add(lblValor);
+		painel.add(lblValor);
 		lblValor.setBounds(40, 470, 60, 35);
 
 		txtValor = new JTextFieldCustom();
-		this.add(txtValor);
+		painel.add(txtValor);
 		txtValor.setBounds(110, 470, 200, 35);
 
 		JLabelCustom lblDoador = new JLabelCustom("Doador:");
-		this.add(lblDoador);
+		painel.add(lblDoador);
 		lblDoador.setBounds(400, 470, 79, 35);
 
 		txtDoador = new JTextFieldCustom();
-		this.add(txtDoador);
+		painel.add(txtDoador);
 		txtDoador.setBounds(510, 470, 200, 35);
 
 		painelBotoes = new JPanelCustom();
-		this.add(painelBotoes);
+		painel.add(painelBotoes);
 		painelBotoes.setBounds(20, 530, 880, 60);
 		painelBotoes.setBackground(painelDimensoes.getBackground());
 
 		btnSalvar = new JButtonCustom("Salvar");
 		painelBotoes.add(btnSalvar);
-		btnSalvar.setBounds(600, 10, 130, 35);
+		btnSalvar.setBounds(200, 10, 130, 35);
 
 		btnAlterar = new JButtonCustom("Alterar");
-		painelBotoes.add(btnAlterar);
+		//painelBotoes.add(btnAlterar);
 		btnAlterar.setBounds(200, 10, 130, 35);
 
 
@@ -258,23 +269,18 @@ public class ObraBoundary extends JPanelCustom{
 					obra = pegarDadosFrame();
 					obraControl.alterar(obra);
 				}
-				
+
 			}
 		};		//Fim action listener
 
 
 		cmbTipo.addActionListener(al);
-		
+
 		btnSalvar.addActionListener(al);
 		btnAlterar.addActionListener(al);
 	}
 
-
-	/*
-	 * Procedure que altera a visibilidade do campo de texto profundidade.
-	 * O campo só deve ser visível quando a opção "Escultura" for selecionada.
-	 */
-
+	
 	public void alterarTxtProfundidade(){
 		if (cmbTipo.getSelectedItem().equals("Escultura")){
 			txtProfundidade.setVisible(true);
@@ -390,4 +396,21 @@ public class ObraBoundary extends JPanelCustom{
 		return new Date(data.getTime());
 	}
 
+	
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FrmSalvarObra tela = new FrmSalvarObra();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	
+	
+	
 }
