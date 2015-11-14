@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 public class TelaPrincipal implements ActionListener{
 
@@ -39,25 +44,66 @@ public class TelaPrincipal implements ActionListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.setBounds(100, 100, 713, 506);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnCadastrarVisitante = new JButton("Cadastrar Visitante");
-		btnCadastrarVisitante.setBounds(32, 26, 173, 39);
-		frame.getContentPane().add(btnCadastrarVisitante);
-		
 		JButton btnEstatistica = new JButton("Estatística");
-		btnEstatistica.setBounds(262, 26, 138, 39);
+		btnEstatistica.setBounds(422, 408, 151, 39);
 		frame.getContentPane().add(btnEstatistica);
 		
-		JButton btnSair = new JButton("Sair");
-		btnSair.setBounds(161, 228, 89, 23);
-		frame.getContentPane().add(btnSair);
+		JButton btnEmprestimo = new JButton("Emprestimo de Obras");
+		btnEmprestimo.setBounds(292, 397, 151, 39);
+		frame.getContentPane().add(btnEmprestimo);
 		
-		btnCadastrarVisitante.addActionListener(this);
+		JPanel pnCadastro = new JPanel();
+		pnCadastro.setBorder(new TitledBorder(null, "Cadastrar", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnCadastro.setBounds(62, 233, 547, 134);
+		frame.getContentPane().add(pnCadastro);
+		pnCadastro.setLayout(null);
+		
+		JButton btnObra = new JButton("");
+		btnObra.setBounds(110, 28, 117, 60);
+		pnCadastro.add(btnObra);
+		btnObra.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icon/img-paint.png")));
+		
+		JLabel lblObras = new JLabel("Obras");
+		lblObras.setBounds(148, 100, 55, 16);
+		pnCadastro.add(lblObras);
+		
+		JButton btnAutor = new JButton("");
+		btnAutor.setBounds(272, 28, 117, 60);
+		pnCadastro.add(btnAutor);
+		btnAutor.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icon/img-pen.png")));
+		
+		JLabel lblAutores = new JLabel("Autores");
+		lblAutores.setBounds(306, 100, 55, 16);
+		pnCadastro.add(lblAutores);
 		btnEstatistica.addActionListener(this);
-		btnSair.addActionListener(this);
+		
+		//
+
+		
+		JPanel pnVenda = new JPanel();
+		pnVenda.setBorder(new TitledBorder(null, "Venda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnVenda.setBounds(62, 93, 547, 134);
+		frame.getContentPane().add(pnVenda);
+		pnVenda.setLayout(null);
+		
+		JButton btnVenda = new JButton("");
+		btnVenda.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icon/img-ticket.png")));
+		btnVenda.setBounds(110, 28, 117, 60);
+		pnVenda.add(btnVenda);
+		
+		JLabel lblIngressos = new JLabel("Ingressos");
+		lblIngressos.setBounds(142, 100, 69, 16);
+		pnVenda.add(lblIngressos);
+		
+		pnCadastro.setOpaque(false);
+		pnVenda.setOpaque(false);
+		
+		
 	}
 
 	@Override
@@ -75,5 +121,4 @@ public class TelaPrincipal implements ActionListener{
 			System.exit(0);
 		}
 	}
-
 }
